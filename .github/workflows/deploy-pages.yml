@@ -18,11 +18,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - name: Install dependencies
@@ -34,8 +34,16 @@ jobs:
       - name: Build web export
         run: CI=1 npx expo export --platform web
 
+      # GitHub Pages serves project sites under a subpath (user.github.io/REPO/),
+      # but Expo's export emits ABSOLUTE paths (/ _expo/..., /assets/...).
+      # Rewrite them to relative so the app loads from the subpath.
+      - name: Fix asset paths for GitHub Pages subpath
+        run: |
+          sed -i 's|"/_expo/|"_expo/|g; s|"/favicon.ico|"favicon.ico|g' dist/index.html
+          sed -i 's|"/assets/|"assets/|g' dist/_expo/static/js/web/*.js
+
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: dist
 

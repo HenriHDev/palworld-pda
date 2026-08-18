@@ -86,7 +86,9 @@ git push -u origin main
 
 ### 3.2 Deploy to GitHub Pages (automatic)
 The repo ships with a workflow at `.github/workflows/deploy-pages.yml` that
-builds the web export and publishes it to Pages on every push.
+builds the web export, rewrites Expo's absolute asset paths to relative ones
+(required for subpath hosting on Pages — without this step the page is blank),
+and publishes to Pages on every push.
 
 1. On GitHub open your repo → **Settings → Pages**.
 2. Under **Build and deployment → Source**, choose **GitHub Actions**.
@@ -103,6 +105,22 @@ builds the web export and publishes it to Pages on every push.
 npm i -g vercel && vercel            # Vercel — deploys npx expo export output
 npm i -g netlify-cli && netlify deploy --prod -d dist
 ```
+
+## 3.5 Blank page on GitHub Pages?
+
+Cause: Expo's export emits absolute paths (`/_expo/...` and `/assets/...`).
+Under `user.github.io/REPO/` those point at the domain root and 404, so the
+page stays blank. The workflow's "Fix asset paths" step rewrites them to
+relative paths at build time.
+
+Fix steps:
+1. Make sure your repo's `.github/workflows/deploy-pages.yml` contains the
+   "Fix asset paths for GitHub Pages subpath" step (it is included in the
+   zip — push it if it's missing locally).
+2. Actions tab → select the latest run → "Re-run all jobs".
+3. After it goes green, wait ~2 minutes and hard-refresh the page (Ctrl+F5).
+4. Verify: press F12 → Network tab → reload. Every request should return 200;
+   any 404 with `/_expo/` or `/assets/` in it means the fix step didn't run.
 
 ## 4. Verifying before shipping
 
