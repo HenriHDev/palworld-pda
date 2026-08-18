@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================================
+   PALWORLD PDA — web polish layer (ignored on native)
+   ========================================================================== */
+html,
+body,
+#root {
+  background-color: #0b1120;
+  color: #e2e8f0;
+}
+
+::selection {
+  background: rgba(6, 182, 212, 0.35);
+}
+
+/* --- thin cyber scrollbars --- */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #334155 transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* --- focus visibility for keyboard users --- */
+*:focus-visible {
+  outline: 2px solid rgba(6, 182, 212, 0.7);
+  outline-offset: 1px;
+  border-radius: 4px;
+}
+
+@media (hover: hover) {
+  /* interactive cards */
+  .pda-card {
+    transition:
+      box-shadow 140ms ease,
+      border-color 140ms ease,
+      transform 140ms ease,
+      background-color 140ms ease;
+  }
+  .pda-card:hover {
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.22), 0 8px 24px rgba(2, 8, 23, 0.55);
+    border-color: rgba(6, 182, 212, 0.55) !important;
+    transform: translateY(-2px);
+  }
+  .pda-card:active {
+    transform: translateY(0);
+  }
+  .pda-btn {
+    transition:
+      background-color 120ms ease,
+      border-color 120ms ease,
+      color 120ms ease,
+      box-shadow 120ms ease;
+  }
+  .pda-btn:hover {
+    filter: brightness(1.12);
+  }
+  .pda-row {
+    transition: background-color 120ms ease, border-color 120ms ease;
+  }
+  .pda-row:hover {
+    background-color: rgba(6, 182, 212, 0.06);
+    border-color: rgba(6, 182, 212, 0.35);
+  }
+  .pda-navitem {
+    transition: background-color 120ms ease, border-color 120ms ease;
+  }
+  .pda-navitem:hover {
+    background-color: rgba(30, 41, 59, 0.9);
+  }
+}
+
+/* --- subtle animated grid backdrop for hero panels --- */
+.pda-gridbg {
+  background-image:
+    linear-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* --- fade-in for route content --- */
+@keyframes pda-fade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.pda-fade {
+  animation: pda-fade 220ms ease-out;
+}
+
+@keyframes pda-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+.pda-pulse {
+  animation: pda-pulse 2.2s ease-in-out infinite;
+}

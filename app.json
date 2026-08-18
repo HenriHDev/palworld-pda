@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "HC Labs Palworld PDA",
+    "slug": "hc-labs-palworld-pda",
+    "version": "1.0.0",
+    "orientation": "default",
+    "scheme": "palpda",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0F172A",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.palworld.pda",
+      "icon": "./assets/icon.png"
+    },
+    "android": {
+      "package": "com.palworld.pda",
+      "icon": "./assets/icon.png",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#0F172A"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single",
+      "favicon": "./assets/icon.png"
+    }
+  }
+}
